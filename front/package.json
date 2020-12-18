@@ -1,0 +1,45 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "使用webpack react搭建的一个模板",
+  "private": true,
+  "scripts": {
+    "build": "webpack --config config/webpack.config.prod.js",
+    "watch": "webpack --watch --config config/webpack.config.dev.js",
+    "start": "webpack-dev-server --open --config config/webpack.config.dev.js",
+    "serve": "anywhere -d ./dist -h localhost -p 3001 -l",
+    "test": "yarn build && yarn serve"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "anywhere": "^1.5.0",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.4.1",
+    "eslint": "^4.18.2",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-css-modules": "^2.7.5",
+    "eslint-plugin-react": "^7.7.0",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.0",
+    "style-loader": "^1.1.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "dependencies": {
+    "dplayer": "^1.26.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-dplayer": "^0.4.2",
+    "webtorrent": "^0.112.0"
+  }
+}
