@@ -2,7 +2,7 @@
 
 同步播放器
 
-简介： 可以在互联网上的任意两端同步播放相同视频。将支持阿里云盘、百度云盘、OneDirver、 Google云盘和本地文件。对于互联网资源，要求两端共同有可访问权。
+简介： 可以在互联网上的任意两端同步播放相同视频。将支持百度云盘（优先支持）、阿里云盘、OneDirver、 Google云盘和本地文件。对于互联网资源，要求两端共同有可访问权。
 
 技术栈： React + Go + Sqlite
 
@@ -11,4 +11,18 @@
 一些用到的开源项目：
 
 1. [Dplayer](https://github.com/DIYgod/DPlayer)
+
+-----
+
+## front
+
+先使用代理，需要能fq的，否则某个包下载不了，哪怕是更换了国内源。
+
+```javascript
+npm config set proxy http://server:port
+npm config set https-proxy http://server:port
+
+yarn config set proxy  http://username:password@server:port
+yarn confit set https-proxy http://username:password@server:port
+```
 
