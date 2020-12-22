@@ -28,12 +28,13 @@ addons:
     packages:
       - nodejs
       - npm
+      - expect
   ssh_known_hosts: 119.29.5.95
 
 install:
   - npm install -g n
   - npm install -g yarn
-  - n latest
+  - sudo n latest
 
 script:
   ## 编译
@@ -41,16 +42,16 @@ script:
   - bash start.sh
   - bash stop.sh
 
-before_deploy:
-  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv
-    -in deploy_rsa.enc -out deploy_rsa -d
-  - eval "$(ssh-agent -s)"
-  - chmod 600 deploy_rsa
-  - ssh-add deploy_rsa
+#before_deploy:
+#  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv
+#    -in deploy_rsa.enc -out deploy_rsa -d
+#  - eval "$(ssh-agent -s)"
+#  - chmod 600 deploy_rsa
+#  - ssh-add deploy_rsa
 
-deploy:
-  provider: script
-  script: bash deploy.sh
-  # skip_cleanup: true
-  on:
-    branch: deploy
+#deploy:
+#  provider: script
+#  script: bash deploy.sh
+#  # skip_cleanup: true
+#  on:
+#    branch: deploy

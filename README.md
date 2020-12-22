@@ -48,3 +48,5 @@ go build server.go			// 编译就行，编译出的文件为server
 ----
 
 you can run <code>bash build.sh</code> to build.
+
+暂时不支持自动部署。。。原因是公钥不见了，和另一个仓库用的是一个服务器。。以后搞吧
