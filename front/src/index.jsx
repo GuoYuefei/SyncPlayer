@@ -1,5 +1,5 @@
 import React from 'react';
-import Example from './components/DPlayer';
+import Example from './components/player';
 
 class Demo extends React.Component {
 
@@ -8,7 +8,7 @@ class Demo extends React.Component {
     render() {
         return (
             <div >
-                <span>Hello React And Webpack!</span>
+                {/* <span>Hello React And Webpack!</span> */}
                 <Example />
             </div>
         );
