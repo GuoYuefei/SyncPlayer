@@ -1,0 +1,54 @@
+language: go
+sudo: true
+
+### blacklist
+# branches:
+#  except:
+#    - legacy
+#    - experimental
+
+### whitelist
+branches:
+  only:
+    - master
+    - deploy
+
+go:
+  - master
+
+env:
+  - GO111MODULE=on GOPROXY=https://goproxy.io,direct
+
+before_install:
+
+
+addons:
+  apt:
+    update: true
+    packages:
+      - nodejs
+      - npm
+  ssh_known_hosts: 119.29.5.95
+
+install:
+  - npm install -g yarn
+
+script:
+  ## 编译
+  - bash build.sh
+  - bash start.sh
+  - bash stop.sh
+
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv
+    -in deploy_rsa.enc -out deploy_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 deploy_rsa
+  - ssh-add deploy_rsa
+
+deploy:
+  provider: script
+  script: bash deploy.sh
+  # skip_cleanup: true
+  on:
+    branch: deploy

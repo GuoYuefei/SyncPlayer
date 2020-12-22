@@ -10,6 +10,11 @@
 *.so
 *.dylib
 
+build
+*.pid
+.out
+syncplayer/server
+
 # Test binary, built with `go test -c`
 *.test
 
