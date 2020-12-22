@@ -33,6 +33,7 @@ addons:
 install:
   - npm install -g n
   - npm install -g yarn
+  - n latest
 
 script:
   ## 编译
