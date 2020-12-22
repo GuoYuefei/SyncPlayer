@@ -31,6 +31,7 @@ addons:
   ssh_known_hosts: 119.29.5.95
 
 install:
+  - npm install -g n
   - npm install -g yarn
 
 script:
