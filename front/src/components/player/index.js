@@ -7,7 +7,13 @@ import 'video-react/dist/video-react.css';
 import { Button, Form, Input, Row, Col } from 'antd';
 import { develop, deploy, delay } from '../../const';
 
-const api = develop.api;
+let api = develop.api;
+if (process.env.NODE_ENV !== 'development') {
+    // 非开发环境
+    api = deploy.api;
+}
+
+console.log(api);
 
 export default class PlayerExample extends Component {
     constructor(props, context) {
@@ -21,7 +27,8 @@ export default class PlayerExample extends Component {
             inputVideoUrl: 'https://media.w3.org/2010/05/video/movie_300.mp4',
             currentTime: 0,
             paused: false,
-            playbackRate: 1.00
+            playbackRate: 1.00,
+            // ended: false
         };
 
         this.handleValueChange = this.handleValueChange.bind(this);
@@ -61,9 +68,10 @@ export default class PlayerExample extends Component {
             currentTime: player.currentTime,
             paused: player.paused,
             playbackRate: player.playbackRate,
+            // ended: player.ended,
         };
-        console.log('will push');
-        console.log(info);
+        // console.log('will push');
+        // console.log(info);
         fetch(api + '/push', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             body: JSON.stringify(info), // must match 'Content-Type' header
@@ -90,7 +98,7 @@ export default class PlayerExample extends Component {
             .then(res => res.json())
             .catch(err => console.log('Error:', err))
             .then(infoJson => {
-                console.log(infoJson);
+                // console.log(infoJson);
                 const { player } = this;
                 // todo 应该还需要判断下达到时间和信息时间的差，毕竟网络是不稳定的
                 // 判断点

@@ -15,6 +15,7 @@ func main() {
 	http.HandleFunc("/push", handles.Push)
 	http.HandleFunc("/pull", handles.Pull)
 	http.Handle("/", http.FileServer(http.Dir("./dist")))
+	log.Println("will listen port :2020")
 	err := http.ListenAndServe(":2020", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
