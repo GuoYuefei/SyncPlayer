@@ -34,7 +34,8 @@ addons:
 install:
   - sudo npm install -g n
   - sudo npm install -g yarn
-  - sudo n latest
+  - sudo n stable
+  - PATH="$PATH"
 
 script:
   ## 编译
