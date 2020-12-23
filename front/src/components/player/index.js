@@ -145,7 +145,7 @@ export default class PlayerExample extends Component {
 
         // 当state那些属性发生改变时同步
         if (
-            state.playerSource !== prevState.playerSource ||
+            // state.playerSource !== prevState.playerSource ||                 // 源变化不发送，播放时自然会发送
             state.currentTime - prevState.currentTime > delay ||              // 这个内容定时发送，不需要及时发送
             state.currentTime - prevState.currentTime < -delay ||
             state.paused !== prevState.paused ||
