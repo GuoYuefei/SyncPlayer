@@ -1,6 +1,6 @@
 # Sync Player
 
-[![Build Status](https://travis-ci.com/GuoYuefei/SyncPlayer.svg?token=BKq2rtshVZhXjhdzxskH&branch=master)](https://travis-ci.com/GuoYuefei/SyncPlayer)[![GitHub license](https://img.shields.io/github/license/GuoYuefei/SyncPlayer)](https://github.com/GuoYuefei/SyncPlayer/blob/master/LICENSE)[![GitHub issues](https://img.shields.io/github/issues/GuoYuefei/SyncPlayer)](https://github.com/GuoYuefei/SyncPlayer/issues)
+[![Build Status](https://travis-ci.com/GuoYuefei/SyncPlayer.svg?token=BKq2rtshVZhXjhdzxskH&branch=master)](https://travis-ci.com/GuoYuefei/SyncPlayer) [![GitHub license](https://img.shields.io/github/license/GuoYuefei/SyncPlayer)](https://github.com/GuoYuefei/SyncPlayer/blob/master/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/GuoYuefei/SyncPlayer)](https://github.com/GuoYuefei/SyncPlayer/issues)
 
 ### 同步播放器
 
