@@ -76,7 +76,7 @@ Sync 按钮用于手动同步，一般用不到。
 
 #### front
 
-先使用代理，需要能fq的，否则某些包可能下载不了，哪怕是更换了国内源。（当然可以自己先试下，之后我有删除webtorrent包，应该不用fq了）
+~先使用代理，需要能fq的，否则某些包可能下载不了，哪怕是更换了国内源。~（当然可以自己先试下，之后我有删除webtorrent包，应该不用fq了）
 
 ```javascript
 npm config set proxy http://server:port
