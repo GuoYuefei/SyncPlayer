@@ -2,7 +2,6 @@ package handles
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -16,7 +15,7 @@ type reqPull struct {
 }
 
 func Pull(w http.ResponseWriter, req *http.Request) {
-	fmt.Println("this is pull request", req.Method)
+	//fmt.Println("this is pull request", req.Method)
 	if req.Method == http.MethodOptions {
 		utils.AllowCORS(w)
 		w.WriteHeader(http.StatusAccepted)
@@ -28,7 +27,7 @@ func Pull(w http.ResponseWriter, req *http.Request) {
 		if err != nil {
 			log.Println(err)
 		}
-		log.Println(string(all))
+		//log.Println(string(all))
 		var rp reqPull = reqPull{}
 		err = json.Unmarshal(all, &rp)
 		if err != nil {

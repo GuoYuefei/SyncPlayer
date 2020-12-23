@@ -5,11 +5,13 @@ import {
 } from 'video-react';
 import 'video-react/dist/video-react.css';
 import { Button, Form, Input, Row, Col } from 'antd';
-import { develop, deploy, delay } from '../../const';
+import { develop, deploy, delay, pullTime } from '../../const';
 
 let api = develop.api;
+let dev = true;
 if (process.env.NODE_ENV !== 'development') {
     // 非开发环境
+    dev = false;
     api = deploy.api;
 }
 
@@ -48,7 +50,7 @@ export default class PlayerExample extends Component {
 
         const pull = setInterval(() => {
             this.pullState();
-        }, 1500);
+        }, pullTime);
 
     }
 
@@ -177,31 +179,35 @@ export default class PlayerExample extends Component {
 
     render() {
         return (
-            <div style={{ height: '85vh', marginTop: 8 }}>
-                <Button style={{ marginBottom: 16, marginLeft: 8 }} onClick={() => {
-                    console.log(this.state);
-                }}> debug </Button>
+            <div style={{ height: '90vh', marginTop: 8 }}>
+                {
+                    dev && (<Button style={{ marginBottom: 16, marginLeft: 8 }} onClick={() => {
+                        console.log(this.state);
+                    }}> debug </Button>)
+                }
+
                 <Row>
-                    <Col span={3} style={{ marginRight: 8, marginLeft: 8 }}>
+                    <Col xs={{ span: 18, offset: 3 }} md={{ span: 5, offset: 0 }}
+                        lg={{ span: 4, offset: 0 }} xl={{ span: 3, offset: 0 }} style={{ left: 8 }}>
                         <Row style={{ marginBottom: 8 }}>
                             <Input.TextArea
                                 showCount
                                 maxLength={30}
                                 name="input_id"
                                 id="input_id"
-                                placeholder="输入与对方相同的字符串"
+                                placeholder="输入与对方相同的字符串， 可以为空"
                                 value={this.state.input_id}
                                 onChange={this.handleIdSyncValueChange}
                             />
                         </Row>
-                        <Row style={{ marginBottom: 8 }}>
+                        <Row >
                             <Form.Item>
                                 <Button type="button" size={'small'} onClick={this.updateId}>
                                     Update ID
                                 </Button>
                             </Form.Item>
                         </Row>
-                        <Row style={{ marginBottom: 8 }}>
+                        <Row >
                             <Form.Item>
                                 <Button type="primary" size={'small'} onClick={this.pullState}>
                                     Sync
@@ -209,7 +215,9 @@ export default class PlayerExample extends Component {
                             </Form.Item>
                         </Row>
                     </Col>
-                    <Col span={18} offset={0}>
+                    <Col lg={{ span: 18, offset: 0 }} xs={{ span: 18, offset: 3 }}
+                        md={{ span: 19, offset: 0 }}
+                    >
                         <Player
                             ref={player => {
                                 this.player = player;
@@ -217,7 +225,7 @@ export default class PlayerExample extends Component {
                             videoId="video-1"
                             autoPlay={false}
                             fluid={false}
-                            height={800}
+                            height={window.screen.height * 0.6}
                             width={'100%'}
                             // aspectRatio={'16:9'}
                         >
@@ -228,13 +236,14 @@ export default class PlayerExample extends Component {
                                 <VolumeMenuButton vertical />
                                 <ReplayControl seconds={10} order={2.2} />
                                 <ForwardControl seconds={10} order={2.3} />
-                                <PlaybackRateMenuButton rates={[5, 2, 1, 0.5, 0.1]} order={7.1} />
+                                <PlaybackRateMenuButton rates={[3, 2, 1.25, 1, 0.5, 0.3]} order={7.1} />
                             </ControlBar>
                         </Player>
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={18} offset={3} style={{ marginTop: 8 }}>
+                    <Col lg={{ span: 18, offset: 4 }} xs={{ span: 18, offset: 3 }}
+                        md={{ span: 19, offset: 5 }} style={{ marginTop: 8 }} xl={{ span: 18, offset: 3 }}>
                         <Form>
                             <Form.Item>
                                 <Input
