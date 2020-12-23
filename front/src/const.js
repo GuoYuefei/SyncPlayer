@@ -8,7 +8,7 @@ export const deploy = {
 };
 
 // 允许的时间延时或误差
-export const delay = 3.0;
+export const delay = 3.5;
 
 // 建议素数1009，1511，2003， 2503，2999 ms
 export const pullTime = 1511;
