@@ -1,6 +1,8 @@
 package global
 
-import "time"
+import (
+	"time"
+)
 
 // 使用时间判断info新旧
 // 这里的时间应该是发送时间而不是到达时间， 所以由前端提供
@@ -16,11 +18,26 @@ type Info struct {
 	LastTime time.Time			// 这个记录这上次使用时间
 }
 
+// 用返回的原因是，主体的Time属性不能乱变，因为需要进行新旧对比
 func (i *Info) Newer() *Info{
+	//fmt.Println(*i)
+	// 处理所有客户端关闭一段时间的情况
+	// 上次访问已经超过PauseTime规定时间，认为已经被暂停在上次访问的时间了
+	if time.Now().Sub(i.LastTime) > PauseTime {
+		//fmt.Println("-----------")
+		td := i.LastTime.Sub(i.Time)
+		i.Time = i.LastTime
+		sec := td.Seconds()
+		i.CurrentTime += sec * i.PlaybackRate
+		i.LastTime = time.Now()
+		return i
+	}
+
+	// 处理正常情况
 	ninfo := *i
 	i.LastTime = time.Now()
 	if !i.Paused {
-		td := time.Now().Sub(i.Time)
+		td := i.LastTime.Sub(i.Time)
 		sec := td.Seconds()
 
 		ninfo.CurrentTime += sec * i.PlaybackRate

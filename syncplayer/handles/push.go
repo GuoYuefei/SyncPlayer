@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"syncplayer/global"
 	"syncplayer/utils"
+	"time"
 )
 
 func Push(w http.ResponseWriter, req *http.Request) {
@@ -34,6 +35,7 @@ func Push(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+		info.LastTime = time.Now()				// 当前时间是这次push访问时间
 		if v, ok := global.InfoMap[info.Id_sync + info.PlayerSource]; ok {
 			if info.IsNew(v) {
 				// 来的状态是新的就更换

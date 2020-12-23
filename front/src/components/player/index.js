@@ -119,11 +119,18 @@ export default class PlayerExample extends Component {
                 if (infoJson.playbackRate !== this.state.playbackRate) {
                     player.playbackRate = infoJson.playbackRate;
                 }
-                if (infoJson.playerSource !== this.state.playerSource) {
-                    this.setState({
-                        playerSource: infoJson.playerSource
-                    });
-                }
+                // playerSource不应该同步
+                // if (infoJson.playerSource !== this.state.playerSource) {
+                //     this.setState({
+                //         playerSource: infoJson.playerSource
+                //     });
+                // }
+
+                // if (infoJson.inputVideoUrl !== this.state.inputVideoUrl) {
+                //     this.setState({
+                //         inputVideoUrl: infoJson.inputVideoUrl
+                //     });
+                // }
             });
     }
 
@@ -165,6 +172,7 @@ export default class PlayerExample extends Component {
 
     updatePlayerInfo() {
         const { inputVideoUrl } = this.state;
+        // this.fetchState();
         this.setState({
             playerSource: inputVideoUrl
         });
@@ -183,6 +191,7 @@ export default class PlayerExample extends Component {
                 {
                     dev && (<Button style={{ marginBottom: 16, marginLeft: 8 }} onClick={() => {
                         console.log(this.state);
+                        console.log(this.player.getState());
                     }}> debug </Button>)
                 }
 

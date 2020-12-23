@@ -11,4 +11,4 @@ export const deploy = {
 export const delay = 3.5;
 
 // 建议素数1009，1511，2003， 2503，2999 ms
-export const pullTime = 1511;
+export const pullTime = 2003;
