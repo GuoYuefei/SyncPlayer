@@ -7,7 +7,7 @@ class Demo extends React.Component {
 
     render() {
         return (
-            <div >
+            <div>
                 {/* <span>Hello React And Webpack!</span> */}
                 <Example />
             </div>

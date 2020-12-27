@@ -6,6 +6,7 @@ import {
 import 'video-react/dist/video-react.css';
 import { Button, Form, Input, Row, Col } from 'antd';
 import { develop, deploy, delay, pullTime } from '../../const';
+import { CloudSyncOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
 
 let api = develop.api;
 let dev = true;
@@ -205,7 +206,7 @@ export default class PlayerExample extends Component {
 
     render() {
         return (
-            <div style={{ height: '90vh', marginTop: 8 }}>
+            <div style={{ marginTop: 16 }}>
                 {
                     dev && (<Button style={{ marginBottom: 16, marginLeft: 8 }} onClick={() => {
                         console.log(this.state);
@@ -229,14 +230,14 @@ export default class PlayerExample extends Component {
                         </Row>
                         <Row >
                             <Form.Item>
-                                <Button type="button" size={'small'} onClick={this.updateId}>
+                                <Button type="button" onClick={this.updateId} icon={<UploadOutlined />}>
                                     Update ID
                                 </Button>
                             </Form.Item>
                         </Row>
                         <Row >
                             <Form.Item>
-                                <Button type="primary" size={'small'} onClick={this.pullState}>
+                                <Button type="primary" onClick={this.pullState} icon={<CloudSyncOutlined />}>
                                     Sync
                                 </Button>
                             </Form.Item>
@@ -282,8 +283,8 @@ export default class PlayerExample extends Component {
                                 />
                             </Form.Item>
                             <Form.Item>
-                                <Button type="button" onClick={this.updatePlayerInfo}>
-                                    Update
+                                <Button type="button" onClick={this.updatePlayerInfo} icon={<PlayCircleOutlined />}>
+                                    更换播放源
                                 </Button>
                             </Form.Item>
                         </Form>
