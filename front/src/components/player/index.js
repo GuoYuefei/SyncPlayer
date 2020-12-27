@@ -41,17 +41,16 @@ export default class PlayerExample extends Component {
         console.log(this.player);
         this.player.subscribeToStateChange(this.handleStateChange.bind(this));
         this.pullState.bind(this);
-        this.fetchState.bind(this);
+        this.pushState.bind(this);
         // 以下需要一个周期性定时器，处理currentTime的变化，以及即使更新云端状态
 
         // const push = setInterval(() => {
-        //     this.fetchState();
+        //     this.pushState();
         // }, 4000);
 
-        const pull = setInterval(() => {
+        this.pullInterval = setInterval(() => {
             this.pullState();
         }, pullTime);
-
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -61,7 +60,11 @@ export default class PlayerExample extends Component {
         }
     }
 
-    fetchState = () => {
+    componentWillUnmount() {
+        clearInterval(this.pullInterval);
+    }
+
+    pushState = () => {
         // eslint-disable-next-line react/no-direct-mutation-state
         this.state.t = new Date();
         const { player } = this.player.getState();
@@ -85,7 +88,11 @@ export default class PlayerExample extends Component {
         });
     }
 
-    pullState = () => {
+    /**
+     * pull 状态
+     * @param next 可选参数， function, 在成功pull之后的操作函数
+     */
+    pullState = (next) => {
         // 看情况更新这边的状态
         fetch(api + '/pull', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -98,7 +105,7 @@ export default class PlayerExample extends Component {
             mode: 'cors', // no-cors, cors, *same-origin
         })
             .then(res => res.json())
-            .catch(err => console.log('Error:', err))
+            .catch(err => console.log('TO JSON Error:', err))
             .then(infoJson => {
                 // console.log(infoJson);
                 const { player } = this;
@@ -131,6 +138,12 @@ export default class PlayerExample extends Component {
                 //         inputVideoUrl: infoJson.inputVideoUrl
                 //     });
                 // }
+            }).catch(err => {
+                // 仅服务器端没有记录时才需要进行next, 即push当前的状态
+                console.log('Error:', err);
+                if (typeof next === 'function') {
+                    next();
+                }
             });
     }
 
@@ -145,14 +158,19 @@ export default class PlayerExample extends Component {
 
         // 当state那些属性发生改变时同步
         if (
-            // state.playerSource !== prevState.playerSource ||                 // 源变化不发送，播放时自然会发送
+            state.playerSource !== prevState.playerSource ||                 // 源变化不发送，播放时自然会发送
             state.currentTime - prevState.currentTime > delay ||              // 这个内容定时发送，不需要及时发送
             state.currentTime - prevState.currentTime < -delay ||
             state.paused !== prevState.paused ||
-            state.playbackRate !== prevState.playbackRate
-            // state.id_sync !== prevState.id_sync
+            state.playbackRate !== prevState.playbackRate ||
+            state.id_sync !== prevState.id_sync
         ) {
-            this.fetchState();
+            if (state.id_sync !== prevState.id_sync || state.playerSource !== prevState.playerSource) {
+                // 当修改id， playerSource后应该先进行一次pull, 如果有必要就push
+                this.pullState(this.pushState);
+            } else {
+                this.pushState();
+            }
         }
     }
 
@@ -172,7 +190,7 @@ export default class PlayerExample extends Component {
 
     updatePlayerInfo() {
         const { inputVideoUrl } = this.state;
-        // this.fetchState();
+        // this.pushState();
         this.setState({
             playerSource: inputVideoUrl
         });
