@@ -4,7 +4,7 @@ import {
     VolumeMenuButton, PlaybackRateMenuButton, ReplayControl, ForwardControl
 } from 'video-react';
 import 'video-react/dist/video-react.css';
-import { Button, Form, Input, Row, Col } from 'antd';
+import { Button, Form, Input, Row, Col, message } from 'antd';
 import { develop, deploy, delay, pullTime } from '../../const';
 import { CloudSyncOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
 
@@ -199,9 +199,19 @@ export default class PlayerExample extends Component {
 
     updateId = () => {
         const { input_id } = this.state;
+        if (input_id !== this.state.id_sync) {
+            message.info('修改同步ID');
+        } else {
+            message.info('ID 与之前相同');
+        }
         this.setState({
             id_sync: input_id
         });
+    }
+
+    sync = () => {
+        message.info('开始手动同步。。。');
+        this.pullState(this.pushState);
     }
 
     render() {
@@ -237,7 +247,7 @@ export default class PlayerExample extends Component {
                         </Row>
                         <Row >
                             <Form.Item>
-                                <Button type="primary" onClick={this.pullState} icon={<CloudSyncOutlined />}>
+                                <Button type="primary" onClick={this.sync} icon={<CloudSyncOutlined />}>
                                     Sync
                                 </Button>
                             </Form.Item>
