@@ -7,6 +7,7 @@ import 'video-react/dist/video-react.css';
 import { Button, Form, Input, Row, Col, message } from 'antd';
 import { develop, deploy, delay, pullTime } from '../../const';
 import { CloudSyncOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import PlaySource from '../../components/PlaySource';
 
 let api = develop.api;
 let dev = true;
@@ -16,7 +17,8 @@ if (process.env.NODE_ENV !== 'development') {
     api = deploy.api;
 }
 
-console.log(api);
+// eslint-disable-next-line no-console
+dev && console.log(api);
 
 export default class PlayerExample extends Component {
     constructor(props, context) {
@@ -28,6 +30,8 @@ export default class PlayerExample extends Component {
             input_id: '',           // Date.now().toString()
             playerSource: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
             inputVideoUrl: 'https://media.w3.org/2010/05/video/movie_300.mp4',
+            // playerSource: 'https://wowzaec2demo.streamlock.net/vod-multitrack/_definst_/smil:ElephantsDream/elephantsdream2.smil/playlist.m3u8',
+            // inputVideoUrl: 'https://wowzaec2demo.streamlock.net/vod-multitrack/_definst_/smil:ElephantsDream/elephantsdream2.smil/playlist.m3u8',
             currentTime: 0,
             paused: false,
             playbackRate: 1.00,
@@ -39,7 +43,8 @@ export default class PlayerExample extends Component {
     }
 
     componentDidMount() {
-        console.log(this.player);
+        // eslint-disable-next-line no-console
+        dev && console.log(this.player);
         this.player.subscribeToStateChange(this.handleStateChange.bind(this));
         this.pullState.bind(this);
         this.pushState.bind(this);
@@ -106,6 +111,7 @@ export default class PlayerExample extends Component {
             mode: 'cors', // no-cors, cors, *same-origin
         })
             .then(res => res.json())
+            // eslint-disable-next-line no-console
             .catch(err => console.log('TO JSON Error:', err))
             .then(infoJson => {
                 // console.log(infoJson);
@@ -141,6 +147,7 @@ export default class PlayerExample extends Component {
                 // }
             }).catch(err => {
                 // 仅服务器端没有记录时才需要进行next, 即push当前的状态
+                // eslint-disable-next-line no-console
                 console.log('Error:', err);
                 if (typeof next === 'function') {
                     next();
@@ -219,7 +226,9 @@ export default class PlayerExample extends Component {
             <div style={{ marginTop: 16 }}>
                 {
                     dev && (<Button style={{ marginBottom: 16, marginLeft: 8 }} onClick={() => {
+                        // eslint-disable-next-line no-console
                         console.log(this.state);
+                        // eslint-disable-next-line no-console
                         console.log(this.player.getState());
                     }}> debug </Button>)
                 }
@@ -269,7 +278,10 @@ export default class PlayerExample extends Component {
                         >
                             <LoadingSpinner />
                             <BigPlayButton position="center" />
-                            <source src={this.state.playerSource} />
+                            <PlaySource
+                                isVideoChild
+                                src={this.state.playerSource}
+                            />
                             <ControlBar autoHide={true} autoHideTime={3000} >
                                 <VolumeMenuButton vertical />
                                 <ReplayControl seconds={10} order={2.2} />
