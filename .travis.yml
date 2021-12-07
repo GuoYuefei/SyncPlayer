@@ -34,8 +34,11 @@ addons:
 install:
   - sudo npm install -g n
   - sudo npm install -g yarn
+  - which node
+  - N_PREFIX=/usr/local #node实际安装位置
   - sudo n lts
-  - PATH="$PATH"
+  - PATH=$N_PREFIX/bin:$PATH
+  # - PATH="$PATH"
 
 script:
   ## 编译
