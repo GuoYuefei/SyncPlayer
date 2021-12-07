@@ -34,7 +34,7 @@ addons:
 install:
   - sudo npm install -g n
   - sudo npm install -g yarn
-  - sudo n stable
+  - sudo n lts
   - PATH="$PATH"
 
 script:
