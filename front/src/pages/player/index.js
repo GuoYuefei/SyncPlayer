@@ -95,6 +95,13 @@ export default class PlayerExample extends Component {
         });
     }
 
+    // 由于网络原因可能消息根本就未达到服务器，res可能是空的
+    checkRes = (reason) => {
+        // eslint-disable-next-line no-console
+        dev && console.log(reason);
+        return Response.error();
+    }
+
     /**
      * pull 状态
      * @param next 可选参数， function, 在成功pull之后的操作函数
@@ -113,10 +120,17 @@ export default class PlayerExample extends Component {
             }),
             mode: 'cors', // no-cors, cors, *same-origin
         })
-            .then(res => res.json())
+            .catch(this.checkRes)
+            .then(res => {
+                if (res.type === 'error') {
+                    return res;
+                }
+                return res.json();
+            })
             // eslint-disable-next-line no-console
             .catch(err => console.log('TO JSON Error:', err))
             .then(infoJson => {
+                if (infoJson && infoJson.type === 'error') return;              // infoJson 可能是Response.error()，也可能是服务器回复的消息，如果是网络原因的未到达服务器，就抛弃结果不处理
                 // console.log(infoJson);
                 const { player } = this;
                 // 应该需要判断下达到时间和信息时间的差，毕竟网络是不稳定的
@@ -153,6 +167,8 @@ export default class PlayerExample extends Component {
                 // eslint-disable-next-line no-console
                 console.log('Error:', err);
                 if (typeof next === 'function') {
+                    // eslint-disable-next-line no-console
+                    dev && console.log('will do next function');
                     next();
                 }
             });
@@ -182,7 +198,6 @@ export default class PlayerExample extends Component {
                 // todo pullState 函数还需要优化，后端应该明确给出是否存在我们需要的状态，当没有时才push
                 // pullState()之后在执行一遍this.pullState(this.pushState)，因为考虑网络不稳定的情况造成的错误
                 // 恢复pullSate的时候，首先应该及时的pull状态，否则可能会在下面控制push的程序块中覆盖云端状态
-                this.pullState();
                 this.pullState(this.pushState);
                 // 视频不在加载下一帧时且计时id为null时需要重启计时函数，规律pull下状态
                 this.pullInterval = setInterval(() => {
