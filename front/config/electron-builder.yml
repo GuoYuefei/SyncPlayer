@@ -1,0 +1,43 @@
+productName: "demo"                             ## 产品名字
+appId: "guoyuefei.github.www"                     
+artifactName: "demo.${ext}"
+asar: false
+files: 
+- "dist/"                                       ## 这个dist是app文件夹里的dist
+# - "LICENSE.TXT"
+directories:            
+  output: "dist"                                 ## 输出文件夹    这个dist是最外面的dist
+mac: 
+  category: "guoyuefei.github.www"
+  # icon: "./public/mac_logo_512x512@2x.icns"
+dmg:
+  artifactName: "${name}-${version}.${ext}"
+nsis: 
+  oneClick: false
+  perMachine: true
+  allowElevation: true                             ## 允许请求提升，如果为false，则用户必须使用提升的权限重新启动安装程序         
+  allowToChangeInstallationDirectory: true        ## 是否允许改变安装目录
+  # installerIcon: "./public/windows_logo_512x512.ico"        ## 安装程序图标
+  createDesktopShortcut: true                     ## 桌面快捷方式
+  createStartMenuShortcut: true                   ## 开始菜单栏快捷方式
+  shortcutName: "demo"                          ## 快捷方式名字
+  artifactName: "demo.${ext}"
+  # include: "./installer.nsh"
+  uninstallDisplayName: "${productName}"
+  # license: './LICENSE.TXT'                        ## 许可证
+win:
+  # icon: './public/windows_logo_512x512.ico'       ## 程序图标
+  # certificateFile: "some.pfx"                     ## 代码签名
+  # certificatePassword: ""                         ## 代码签名密码
+  requestedExecutionLevel: "requireAdministrator"         ## 申请最高权限
+  target: 
+  - target: "nsis"
+    arch: 
+    - "x64"
+
+extraResources: 
+  from: "app/assets/"
+  to: "./"
+  filter: 
+    - "!.svn/**"
+    - "!.git/**"

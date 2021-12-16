@@ -1,0 +1,24 @@
+{
+    "name": "demo",
+    "productName": "demo-electron",
+    "version": "0.0.1",
+    "description": "react webpack electron",
+    "private": true,
+    "main": "dist/main/main.js",
+    "scripts": {
+      
+    },
+    "author": {
+      "name": "GuoYuefei",
+      "email": "guoyuefei@protonmail.com",
+      "url": "https://github.com/GuoYuefei"
+    },
+    "license": "MIT",
+    "devDependencies": {
+    
+    },
+    "dependencies": {
+
+    }
+  }
+  

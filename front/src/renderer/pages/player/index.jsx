@@ -320,6 +320,7 @@ export default class PlayerExample extends Component {
                             fluid={false}
                             height={window.screen.height * 0.6}
                             width={'100%'}
+                            preload={'auto'}
                             // aspectRatio={'16:9'}
                         >
                             <LoadingSpinner />

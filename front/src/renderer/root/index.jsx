@@ -1,5 +1,5 @@
 import React from 'react';
-import Example from './pages/player';
+import Example from '../pages/player';
 
 class Demo extends React.Component {
 

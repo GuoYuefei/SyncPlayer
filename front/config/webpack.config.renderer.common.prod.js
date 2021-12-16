@@ -10,10 +10,13 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // https://www.cnblogs.com/jack-zhou21235/p/12010088.html
 
-const OUTPUT_PATH = path.resolve(__dirname, '../dist');
+const OUTPUT_PATH = path.resolve(__dirname, '../app', 'dist', 'renderer');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
+    target: 'electron-renderer',
+    // 构建代码映射源码，用于查错
+    devtool: 'none',
     // entry: './index.jsx',
     // output: {
     //     filename: 'index.js',
@@ -22,12 +25,12 @@ module.exports = {
 
     // 多入口模式配置
     entry: {
-        index: './index.jsx',
+        index: './src/renderer/index.jsx',
     },
 
     output: {
         filename: '[name].js',
-        path: OUTPUT_PATH
+        path: OUTPUT_PATH,
     },
 
     resolve: {
@@ -79,8 +82,6 @@ module.exports = {
         ],
     },
 
-    // 构建代码映射源码，用于查错
-    devtool: 'inline-source-map',
     devServer: {
         contentBase: OUTPUT_PATH,
         // compress: true,
@@ -90,10 +91,18 @@ module.exports = {
     plugins: [
         // 拷贝单文件或目录到构建目录
         new CopyWebpackPlugin([
-            { from: 'public/', to: './' }
+            { from: path.resolve('app', 'pages'), to: './' },
         ]),
 
         new CleanWebpackPlugin(),
+
+        new UglifyJsPlugin({
+            test: /\.js($|\?)/i,
+            exclude: /(public)/,
+            parallel: true,             // 默认为os.cpus().length - 1， 可以自己设置数字
+            // 生产环境不应开启sourceMap
+            // sourceMap: true,
+        }),
 
         new webpack.DefinePlugin({
             MOUNT_NODE_ID: JSON.stringify('root'),

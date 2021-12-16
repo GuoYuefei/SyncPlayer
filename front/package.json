@@ -1,17 +1,43 @@
 {
   "name": "demo",
   "version": "1.0.0",
-  "description": "使用webpack react搭建的一个模板",
+  "description": "使用 webpack react electron-build 搭建的一个electron应用的项目模板",
   "private": true,
+  "main": "app/dist/renderer/index.js",
   "scripts": {
-    "build": "webpack --config config/webpack.config.prod.js",
-    "watch": "webpack --watch --config config/webpack.config.dev.js",
-    "start": "webpack-dev-server --open --config config/webpack.config.dev.js",
-    "serve": "anywhere -d ./dist -h localhost -p 3001 -l",
-    "test": "yarn build && yarn serve"
+    "build-renderer-dev": "webpack --config ./config/webpack.config.renderer.dev.js",
+    "watch": "webpack --config ./config/webpack.config.renderer.dev.js --watch",
+    "start": "webpack-dev-server --config ./config/webpack.config.renderer.dev.js --open",
+    "start-no-browser": "webpack-dev-server --config ./config/webpack.config.renderer.dev.js",
+    "serve": "anywhere -d ./app/dist/renderer -h localhost -p 3003 -l",
+    "test": "yarn build-renderer-dev && yarn serve",
+    "build-main-dev": "webpack --config ./config/webpack.config.main.dev.js",
+    "electron-dev": "electron ./app",
+    "build-main": "webpack --config ./config/webpack.config.main.prod.js",
+    "build-renderer": "webpack --config ./config/webpack.config.renderer.prod.js",
+    "build": "yarn build-main && yarn build-renderer",
+    "build-web": "webpack --config ./config/webpack.config.web.prod.js",
+    "dev": "yarn build-main-dev && run-p start-no-browser electron-dev",
+    "install-win": "electron-builder --config ./config/electron-builder.yml -w",
+    "install-mac": "electron-builder --config ./config/electron-builder.yml -m",
+    "install-build-win": "yarn && yarn build && yarn install-win",
+    "install-build-mac": "yarn && yarn build && yarn install-mac"
   },
-  "author": "",
+  "author": {
+    "name": "GuoYuefei",
+    "email": "guoyuefei@protonmail.com",
+    "url": "https://github.com/GuoYuefei"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuoYuefei/SyncPlayer.git"
+  },
+  "keywords": [
+    "electron",
+    "react",
+    "webpack"
+  ],
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
@@ -23,21 +49,25 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.1",
+    "electron": "^7.2.4",
+    "electron-builder": "^22.2.0",
     "eslint": "^4.18.2",
     "eslint-loader": "^3.0.3",
     "eslint-plugin-css-modules": "^2.7.5",
     "eslint-plugin-react": "^7.7.0",
     "less": "^3.12.2",
     "less-loader": "^7.0.0",
+    "npm-run-all": "^4.1.5",
     "style-loader": "^1.1.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.10.1",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.3.0",
-    "antd": "^4.9.4",
+    "@ant-design/icons": "^4.7.0",
+    "antd": "^4.17.3",
     "hls.js": "^1.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
